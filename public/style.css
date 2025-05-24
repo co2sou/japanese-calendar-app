@@ -1,0 +1,460 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background-color: #f8fafc;
+    color: #334155;
+    line-height: 1.6;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* 认证界面样式 */
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.auth-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.auth-form h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #1e293b;
+    font-weight: 300;
+    font-size: 1.75rem;
+}
+
+.form-section h2 {
+    margin-bottom: 1.5rem;
+    color: #475569;
+    font-weight: 500;
+}
+
+.form-section input {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+}
+
+.form-section input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-section button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.form-section button:hover {
+    background-color: #2563eb;
+}
+
+.form-section p {
+    text-align: center;
+    margin-top: 1rem;
+    color: #6b7280;
+}
+
+.form-section a {
+    color: #3b82f6;
+    text-decoration: none;
+}
+
+.form-section a:hover {
+    text-decoration: underline;
+}
+
+.error-message {
+    color: #dc2626;
+    text-align: center;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    background-color: #fef2f2;
+    border-radius: 0.5rem;
+    border: 1px solid #fecaca;
+}
+
+/* 日历界面样式 */
+.calendar-container {
+    min-height: 100vh;
+    padding: 1rem;
+}
+
+.header {
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.header h1 {
+    font-size: 1.75rem;
+    font-weight: 300;
+    color: #1e293b;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-info span {
+    color: #64748b;
+}
+
+#logout-btn {
+    padding: 0.5rem 1rem;
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+}
+
+#logout-btn:hover {
+    background-color: #dc2626;
+}
+
+.month-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.month-navigation button {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: none;
+    background-color: #f1f5f9;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 1.25rem;
+    color: #64748b;
+    transition: all 0.2s;
+}
+
+.month-navigation button:hover {
+    background-color: #e2e8f0;
+}
+
+#current-month {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #374151;
+    min-width: 140px;
+    text-align: center;
+}
+
+/* 日历网格样式 */
+.calendar {
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background-color: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.weekday {
+    padding: 1rem;
+    text-align: center;
+    font-weight: 500;
+    color: #64748b;
+}
+
+.weekday.sunday {
+    color: #dc2626;
+}
+
+.weekday.saturday {
+    color: #2563eb;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    border-right: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    position: relative;
+}
+
+.calendar-day:hover {
+    background-color: #f8fafc;
+}
+
+.calendar-day.today {
+    background-color: #eff6ff;
+    border-color: #bfdbfe;
+}
+
+.calendar-day.empty {
+    background-color: #f9fafb;
+    cursor: default;
+}
+
+.day-number {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    color: #374151;
+}
+
+.calendar-day.today .day-number {
+    color: #2563eb;
+}
+
+.events-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+}
+
+.event-item {
+    background-color: #f1f5f9;
+    padding: 0.125rem 0.25rem;
+    border-radius: 0.25rem;
+    font-size: 0.625rem;
+    color: #64748b;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.more-events {
+    font-size: 0.5rem;
+    color: #9ca3af;
+    text-align: center;
+}
+
+/* 模态框样式 */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 0.75rem;
+    width: 90%;
+    max-width: 400px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.modal-header h3 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #374151;
+}
+
+#close-modal {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #9ca3af;
+    padding: 0;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#close-modal:hover {
+    color: #64748b;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+.events-list {
+    margin-bottom: 1.5rem;
+}
+
+.event-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background-color: #f8fafc;
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.event-text {
+    color: #374151;
+}
+
+.delete-event {
+    background: none;
+    border: none;
+    color: #dc2626;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.25rem;
+}
+
+.delete-event:hover {
+    color: #b91c1c;
+}
+
+.add-event-section h4 {
+    margin-bottom: 0.75rem;
+    color: #374151;
+    font-weight: 500;
+}
+
+.input-group {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.input-group input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.input-group button {
+    padding: 0.5rem 1rem;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+}
+
+.input-group button:hover {
+    background-color: #2563eb;
+}
+
+.input-group button:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+}
+
+.char-count {
+    font-size: 0.75rem;
+    color: #9ca3af;
+}
+
+.warning {
+    background-color: #fef3c7;
+    color: #92400e;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid #fcd34d;
+    font-size: 0.875rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .calendar-container {
+        padding: 0.5rem;
+    }
+    
+    .header {
+        padding: 1rem;
+    }
+    
+    .header-content {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+    
+    .user-info {
+        justify-content: space-between;
+    }
+    
+    .calendar-day {
+        padding: 0.25rem;
+    }
+    
+    .day-number {
+        font-size: 0.875rem;
+    }
+    
+    .event-item {
+        font-size: 0.5rem;
+    }
+}
