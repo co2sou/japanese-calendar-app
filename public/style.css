@@ -269,6 +269,9 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.125rem;
 }
 
 .more-events {
@@ -360,6 +363,7 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-size: 0.875rem;
 }
 
 .delete-event {

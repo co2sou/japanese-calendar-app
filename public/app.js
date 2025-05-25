@@ -191,6 +191,8 @@ class CalendarApp {
 
         const daysInMonth = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, 0).getDate();
         const firstDay = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1).getDay();
+        const today = new Date();
+        let todayElement = null;
 
         // 空白天数
         for (let i = 0; i < firstDay; i++) {
@@ -204,6 +206,17 @@ class CalendarApp {
             const dayElement = this.createDayElement(day);
             grid.appendChild(dayElement);
         }
+
+        // 滾動到當天
+        const today = new Date();
+        if (this.currentDate.getFullYear() === today.getFullYear() && 
+            this.currentDate.getMonth() === today.getMonth()) {
+            setTimeout(() => {
+                const todayCell = document.getElementById('today-cell');
+                if (todayCell) {
+                    todayCell.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 100);
     }
 
     createDayElement(day) {
@@ -215,6 +228,7 @@ class CalendarApp {
         
         if (isToday) {
             dayElement.classList.add('today');
+            dayElement.id = 'today-cell';
         }
 
         const dayNumber = document.createElement('div');
@@ -225,11 +239,12 @@ class CalendarApp {
         const eventsPreview = document.createElement('div');
         eventsPreview.className = 'events-preview';
         
-        const dayEvents = this.events[dateKey] || [];
+        const dayEvents = [...(this.events[dateKey] || [])];
+        dayEvents.sort((a, b) => a.start_time.localeCompare(b.start_time));
         dayEvents.slice(0, 4).forEach(event => {
             const eventItem = document.createElement('div');
             eventItem.className = 'event-item';
-            eventItem.textContent = event.event;
+            eventItem.textContent = `${event.start_time.slice(0, 5)} ${event.event}`;
             eventsPreview.appendChild(eventItem);
         });
 
@@ -287,12 +302,15 @@ class CalendarApp {
         const eventsList = document.getElementById('events-list');
         eventsList.innerHTML = '';
 
-        const dayEvents = this.events[this.selectedDate.dateKey] || [];
+        const dayEvents = [...(this.events[this.selectedDate.dateKey] || [])];
         
         if (dayEvents.length === 0) {
             eventsList.innerHTML = '<p style="color: #9ca3af; text-align: center;">予定がありません</p>';
             return;
         }
+
+        // 按開始時間排序
+        dayEvents.sort((a, b) => a.start_time.localeCompare(b.start_time));
 
         dayEvents.forEach((event, index) => {
             const eventItem = document.createElement('div');
@@ -300,7 +318,7 @@ class CalendarApp {
             
             const eventText = document.createElement('span');
             eventText.className = 'event-text';
-            eventText.textContent = `${event.start_time}${event.end_time ? '～' + event.end_time : ''} ${event.event}`;
+            eventText.textContent = `${event.start_time.slice(0, 5)}${event.end_time ? '～' + event.end_time.slice(0, 5) : ''} ${event.event}`;
             
             const deleteBtn = document.createElement('button');
             deleteBtn.className = 'delete-event';
