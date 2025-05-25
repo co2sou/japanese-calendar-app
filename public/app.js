@@ -300,7 +300,7 @@ class CalendarApp {
             
             const eventText = document.createElement('span');
             eventText.className = 'event-text';
-            eventText.textContent = event.event;
+            eventText.textContent = `${event.start_time}${event.end_time ? '～' + event.end_time : ''} ${event.event}`;
             
             const deleteBtn = document.createElement('button');
             deleteBtn.className = 'delete-event';
@@ -314,33 +314,26 @@ class CalendarApp {
     }
 
     updateAddEventSection() {
-        const dayEvents = this.events[this.selectedDate.dateKey] || [];
         const addEventSection = document.getElementById('add-event-section');
-        const maxEventsWarning = document.getElementById('max-events-warning');
-        
-        if (dayEvents.length >= 4) {
-            addEventSection.classList.add('hidden');
-            maxEventsWarning.classList.remove('hidden');
-        } else {
-            addEventSection.classList.remove('hidden');
-            maxEventsWarning.classList.add('hidden');
-        }
+        addEventSection.classList.remove('hidden');
     }
 
     updateCharCount() {
         const input = document.getElementById('new-event-input');
         const charCount = document.getElementById('char-count');
-        charCount.textContent = `${input.value.length}/8 文字`;
+        charCount.textContent = `${input.value.length}/16 文字`;
         
         const addBtn = document.getElementById('add-event-btn');
-        addBtn.disabled = !input.value.trim() || input.value.length > 8;
+        addBtn.disabled = !input.value.trim() || input.value.length > 16;
     }
 
     async addEvent() {
         const input = document.getElementById('new-event-input');
+        const startTime = document.getElementById('event-start-time');
+        const endTime = document.getElementById('event-end-time');
         const eventText = input.value.trim();
         
-        if (!eventText || eventText.length > 8) return;
+        if (!eventText || eventText.length > 16 || !startTime.value) return;
 
         try {
             const response = await fetch('/api/events', {
@@ -351,7 +344,9 @@ class CalendarApp {
                 },
                 body: JSON.stringify({
                     date: this.selectedDate.dateKey,
-                    event: eventText
+                    event: eventText,
+                    startTime: startTime.value,
+                    endTime: endTime.value || null
                 })
             });
 

@@ -127,18 +127,29 @@ app.get('/api/events', authenticateToken, async (req, res) => {
 // 创建事件
 app.post('/api/events', authenticateToken, async (req, res) => {
   try {
-    const { date, event } = req.body;
+    const { date, event, startTime, endTime } = req.body;
     
-    if (!date || !event) {
-      return res.status(400).json({ error: 'Date and event required' });
+    if (!date || !event || !startTime) {
+      return res.status(400).json({ error: 'Date, event and start time are required' });
     }
 
-    if (event.length > 8) {
-      return res.status(400).json({ error: 'Event must be 8 characters or less' });
+    if (event.length > 16) {
+      return res.status(400).json({ error: 'Event must be 16 characters or less' });
     }
 
-    const eventId = await db.createEvent(req.user.userId, date, event);
-    res.json({ id: eventId, date, event });
+    // 验证时间格式
+    const timeRegex = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/;
+    if (!timeRegex.test(startTime) || (endTime && !timeRegex.test(endTime))) {
+      return res.status(400).json({ error: 'Invalid time format' });
+    }
+
+    // 如果有结束时间，确保结束时间晚于开始时间
+    if (endTime && endTime <= startTime) {
+      return res.status(400).json({ error: 'End time must be later than start time' });
+    }
+
+    const eventId = await db.createEvent(req.user.userId, date, event, startTime, endTime);
+    res.json({ id: eventId, date, event, start_time: startTime, end_time: endTime });
   } catch (error) {
     console.error('Create event error:', error);
     res.status(500).json({ error: 'Internal server error' });

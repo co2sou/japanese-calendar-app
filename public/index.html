@@ -73,13 +73,17 @@
                     <div class="add-event-section" id="add-event-section">
                         <h4>新しい予定を追加</h4>
                         <div class="input-group">
-                            <input type="text" id="new-event-input" placeholder="予定を入力 (最大8文字)" maxlength="8" />
+                            <input type="text" id="new-event-input" placeholder="予定を入力 (最大16文字)" maxlength="16" />
+                        </div>
+                        <div class="input-group">
+                            <input type="time" id="event-start-time" required />
+                            <span class="time-separator">～</span>
+                            <input type="time" id="event-end-time" />
+                        </div>
+                        <div class="input-group">
                             <button id="add-event-btn">追加</button>
                         </div>
-                        <div class="char-count" id="char-count">0/8 文字</div>
-                    </div>
-                    <div id="max-events-warning" class="warning hidden">
-                        この日の予定は最大4件までです
+                        <div class="char-count" id="char-count">0/16 文字</div>
                     </div>
                 </div>
             </div>

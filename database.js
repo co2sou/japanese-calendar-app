@@ -31,6 +31,8 @@ class Database {
         user_id INTEGER NOT NULL,
         date TEXT NOT NULL,
         event TEXT NOT NULL,
+        start_time TEXT NOT NULL,
+        end_time TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users (id)
       )
@@ -70,10 +72,10 @@ class Database {
     });
   }
 
-  createEvent(userId, date, event) {
+  createEvent(userId, date, event, startTime, endTime) {
     return new Promise((resolve, reject) => {
-      this.db.run('INSERT INTO events (user_id, date, event) VALUES (?, ?, ?)', 
-        [userId, date, event], 
+      this.db.run('INSERT INTO events (user_id, date, event, start_time, end_time) VALUES (?, ?, ?, ?, ?)', 
+        [userId, date, event, startTime, endTime], 
         function(err) {
           if (err) reject(err);
           else resolve(this.lastID);

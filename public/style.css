@@ -348,10 +348,18 @@ body {
     background-color: #f8fafc;
     border-radius: 0.5rem;
     margin-bottom: 0.5rem;
+    font-size: 0.875rem;
 }
 
 .event-text {
     color: #374151;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .delete-event {
@@ -376,7 +384,13 @@ body {
 .input-group {
     display: flex;
     gap: 0.5rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
+    align-items: center;
+}
+
+.time-separator {
+    color: #64748b;
+    font-size: 0.875rem;
 }
 
 .input-group input {
@@ -385,6 +399,11 @@ body {
     border: 1px solid #d1d5db;
     border-radius: 0.375rem;
     font-size: 0.875rem;
+}
+
+.input-group input[type="time"] {
+    flex: 0 0 auto;
+    width: 120px;
 }
 
 .input-group input:focus {
